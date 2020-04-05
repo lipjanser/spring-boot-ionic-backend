@@ -1,4 +1,4 @@
-package com.felipejanser.cursomc.domain;
+package com.felipejanser.cursomc.enums;
 
 public enum TipoCliente {
 	
