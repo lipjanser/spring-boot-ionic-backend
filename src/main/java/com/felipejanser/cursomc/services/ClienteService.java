@@ -30,4 +30,9 @@ public class ClienteService {
 		return repo.save(obj);
 	}
 	
+	public void delete(Cliente obj) {
+		find(obj.getId());
+		repo.deleteById(obj.getId());
+	}
+	
 }

@@ -30,4 +30,9 @@ public class CategoriaService {
 		return repo.save(obj);
 	}
 	
+	public void delete(Categoria obj) {
+		find(obj.getId());
+		repo.deleteById(obj.getId());
+	}
+	
 }
