@@ -30,9 +30,9 @@ public class PedidoService {
 		return repo.save(obj);
 	}
 	
-	public void delete(Pedido obj) {
-		find(obj.getId());
-		repo.deleteById(obj.getId());
+	public void delete(Integer id) {
+		find(id);
+		repo.deleteById(id);
 	}
 	
 }

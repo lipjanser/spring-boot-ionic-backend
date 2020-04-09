@@ -41,8 +41,8 @@ public class PedidoResource {
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
-	public ResponseEntity<Void> update(@RequestBody Pedido obj) {
-		service.delete(obj);
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }
