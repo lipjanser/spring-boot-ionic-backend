@@ -1,5 +1,6 @@
 package com.felipejanser.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,10 @@ public class PedidoService {
 		}catch(DataIntegrityViolationException ex) {
 			throw new DataIntegrityException("Não é possível excluir um pedido que possui itens! Id: " + id + ", Tipo: " + Pedido.class.getName());
 		}
+	}
+	
+	public List<Pedido> findAll() {
+		return repo.findAll();
 	}
 	
 }
