@@ -3,10 +3,12 @@ package com.felipejanser.cursomc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.felipejanser.cursomc.domain.Cliente;
 import com.felipejanser.cursomc.repositories.ClienteRepository;
+import com.felipejanser.cursomc.services.exceptions.DataIntegrityException;
 import com.felipejanser.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -32,7 +34,11 @@ public class ClienteService {
 	
 	public void delete(Integer id) {
 		find(id);
-		repo.deleteById(id);
+		try {
+			repo.deleteById(id);
+		}catch(DataIntegrityViolationException ex) {
+			throw new DataIntegrityException("Não é possível excluir um cliente que possui pedidos e endereços! Id: " + id + ", Tipo: " + Cliente.class.getName());
+		}
 	}
 	
 }
