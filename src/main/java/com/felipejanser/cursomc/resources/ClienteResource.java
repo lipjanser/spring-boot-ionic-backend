@@ -17,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.felipejanser.cursomc.domain.Categoria;
 import com.felipejanser.cursomc.domain.Cliente;
-import com.felipejanser.cursomc.dto.CategoriaDTO;
 import com.felipejanser.cursomc.dto.ClienteDTO;
 import com.felipejanser.cursomc.services.ClienteService;
 
