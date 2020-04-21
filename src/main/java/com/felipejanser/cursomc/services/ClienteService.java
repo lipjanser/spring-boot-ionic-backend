@@ -5,9 +5,13 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.felipejanser.cursomc.domain.Cliente;
+import com.felipejanser.cursomc.dto.ClienteDTO;
 import com.felipejanser.cursomc.repositories.ClienteRepository;
 import com.felipejanser.cursomc.services.exceptions.DataIntegrityException;
 import com.felipejanser.cursomc.services.exceptions.ObjectNotFoundException;
@@ -29,8 +33,9 @@ public class ClienteService {
 	}
 	
 	public Cliente update(Cliente obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Cliente newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -38,12 +43,26 @@ public class ClienteService {
 		try {
 			repo.deleteById(id);
 		}catch(DataIntegrityViolationException ex) {
-			throw new DataIntegrityException("Não é possível excluir um cliente que possui pedidos e endereços! Id: " + id + ", Tipo: " + Cliente.class.getName());
+			throw new DataIntegrityException("Não é possível excluir um Cliente com entidades relacionadas! Id: " + id + ", Tipo: " + Cliente.class.getName());
 		}
 	}
 	
 	public List<Cliente> findAll() {
 		return repo.findAll();
+	}
+	
+	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repo.findAll(pageRequest);
+	}
+	
+	public Cliente fromDTO(ClienteDTO objDTO) {
+		return new Cliente(objDTO.getId(),objDTO.getNome(),objDTO.getEmail(),null,null);
+	}
+	
+	private void updateData(Cliente newObj,Cliente obj) {
+		newObj.setNome(obj.getNome());
+		newObj.setEmail(obj.getEmail());
 	}
 	
 }
