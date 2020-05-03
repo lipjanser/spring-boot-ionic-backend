@@ -28,6 +28,7 @@ public class ClienteNewDTO implements Serializable {
 	@NotEmpty(message="Preenchimento do campo 'Número' é obrigatório.")
 	private String numero;
 	private String complemento;
+	@NotEmpty(message="Preenchimento do campo 'Bairro' é obrigatório.")
 	private String bairro;
 	@NotEmpty(message="Preenchimento do campo 'CEP' é obrigatório.")
 	private String cep;
