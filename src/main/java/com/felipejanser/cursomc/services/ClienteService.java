@@ -60,7 +60,7 @@ public class ClienteService {
 		return new Cliente(objDTO.getId(),objDTO.getNome(),objDTO.getEmail(),null,null);
 	}
 	
-	private void updateData(Cliente newObj,Cliente obj) {
+	private void updateData(Cliente newObj, Cliente obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}
