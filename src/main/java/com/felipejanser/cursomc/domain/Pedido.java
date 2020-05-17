@@ -78,6 +78,37 @@ public class Pedido implements Serializable {
 		return true;
 	}
 	
+	public Double getValorTotalProdutos() {
+		Double total = 0.0;
+		
+		for(ItemPedido x : this.getItens()) {
+			total += x.getValorTotal();
+		}
+		
+		return total;
+	}
+	
+	public Double getDescontoTotal() {
+		Double descontoTotaltotal = 0.0;
+		
+		for(ItemPedido x : this.getItens()) {
+			descontoTotaltotal += x.getDesconto();
+		}
+		
+		return descontoTotaltotal;
+	}
+	
+	public Double getValorTotal() {
+		Double total = 0.0;
+		
+		for(ItemPedido x : this.getItens()) {
+			total += x.getSubtotal();
+		}
+		
+		return total;
+	}
+	
+	
 	public Integer getId() {
 		return id;
 	}
