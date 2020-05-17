@@ -3,7 +3,7 @@ package com.felipejanser.cursomc.services.validation.utils;
 //Fonte: https://gist.github.com/adrianoluis/5043397d378ae506d87366abb0ab4e30
 public class BR {
 
-	 // CPF
+	// CPF
     private static final int[] WEIGHT_SSN = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
 
     // CNPJ
@@ -13,8 +13,7 @@ public class BR {
         if (number <= 0) return 0;
         final int chrIndex = number - 1;
         final int weightIndex = weight.length > chr.length ? number : chrIndex;
-        return (recursiveSum(weight, chr, chrIndex) +
-                Character.getNumericValue(chr[chrIndex]) * weight[weightIndex]);
+        return (recursiveSum(weight, chr, chrIndex) + Character.getNumericValue(chr[chrIndex]) * weight[weightIndex]);
     }
 
     private static int calculate(final String str, final int[] weight) {
@@ -32,7 +31,7 @@ public class BR {
     }
 
     /**
-     * Valida CPF
+     * Validar CPF
      *
      * @param ssn
      * @return
@@ -43,12 +42,23 @@ public class BR {
     }
 
     /**
-     * Valida CNPJ
+     * Validar CNPJ
      *
      * @param tfn
      * @return
      */
     public static boolean isValidCNPJ(String tfn) {
+        if (tfn == null || !tfn.matches("\\d{14}") || tfn.matches(tfn.charAt(0) + "{14}")) return false;
+        return checkEquals(tfn, 12, WEIGHT_TFN);
+    }
+    
+    /**
+     * Validar Cód. UF
+     *
+     * @param tfn
+     * @return
+     */
+    public static boolean isValidUF(String tfn) {
         if (tfn == null || !tfn.matches("\\d{14}") || tfn.matches(tfn.charAt(0) + "{14}")) return false;
         return checkEquals(tfn, 12, WEIGHT_TFN);
     }
