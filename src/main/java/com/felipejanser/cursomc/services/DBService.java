@@ -1,5 +1,6 @@
 package com.felipejanser.cursomc.services;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
@@ -51,7 +52,7 @@ public class DBService {
 	@Autowired
 	private ItemPedidoRepository itemPedidoRepository;
 	
-	public void instantiateTestDatabase() throws Exception {
+	public void instantiateTestDatabase() throws ParseException {
 		Categoria cat1 = new Categoria(null,"Informática");
 		Categoria cat2 = new Categoria(null,"Escritório");
 		Categoria cat3 = new Categoria(null,"Cama");
