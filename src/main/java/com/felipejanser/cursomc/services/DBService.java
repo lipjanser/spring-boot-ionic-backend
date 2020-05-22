@@ -20,6 +20,7 @@ import com.felipejanser.cursomc.domain.PagamentoComCartao;
 import com.felipejanser.cursomc.domain.Pedido;
 import com.felipejanser.cursomc.domain.Produto;
 import com.felipejanser.cursomc.enums.EstadoPagamento;
+import com.felipejanser.cursomc.enums.Perfil;
 import com.felipejanser.cursomc.enums.TipoCliente;
 import com.felipejanser.cursomc.repositories.CategoriaRepository;
 import com.felipejanser.cursomc.repositories.CidadeRepository;
@@ -117,10 +118,10 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5));
 		
 		Cliente cli1 = new Cliente(null,"Kratos, o Bom de Guerra","vitorcandrade@hotmail.com","98765432127", TipoCliente.PESSOAFISICA,passwordEncoder.encode("teste1")); 
-		Cliente cli2 = new Cliente(null,"João Silva","joao@gmail.com","02030982008", TipoCliente.PESSOAFISICA,passwordEncoder.encode("teste2"));
-		
 		cli1.getTelefones().addAll(Arrays.asList("1234","5678"));
+		Cliente cli2 = new Cliente(null,"Felipe Janser","lipjanser@hotmail.com","02030982008", TipoCliente.PESSOAFISICA,passwordEncoder.encode("teste3"));
 		cli2.getTelefones().addAll(Arrays.asList("1234","5678","12342134"));
+		cli2.addPerfil(Perfil.ADMIN);
 		
 		Endereco e1 = new Endereco(null,"Rua Flores","300","Apto 30","Jardim","50000000",cli1,c1);
 		Endereco e2 = new Endereco(null,"Av. Matos","105","Sala 800","Jardim","50000001",cli1,c2);
