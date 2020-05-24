@@ -8,16 +8,22 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.felipejanser.cursomc.domain.Cliente;
 import com.felipejanser.cursomc.domain.ItemPedido;
 import com.felipejanser.cursomc.domain.PagamentoComBoleto;
 import com.felipejanser.cursomc.domain.Pedido;
 import com.felipejanser.cursomc.enums.EstadoPagamento;
+import com.felipejanser.cursomc.repositories.ClienteRepository;
 import com.felipejanser.cursomc.repositories.ItemPedidoRepository;
 import com.felipejanser.cursomc.repositories.PagamentoRepository;
 import com.felipejanser.cursomc.repositories.PedidoRepository;
-import com.felipejanser.cursomc.repositories.ProdutoRepository;
+import com.felipejanser.cursomc.security.UserSS;
+import com.felipejanser.cursomc.services.exceptions.AuthorizationException;
 import com.felipejanser.cursomc.services.exceptions.DataIntegrityException;
 import com.felipejanser.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -44,6 +50,9 @@ public class PedidoService {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private ClienteRepository clienteRepository;
 	
 	public Pedido find(Integer id) {
 		Optional<Pedido> obj = repo.findById(id);
@@ -90,6 +99,16 @@ public class PedidoService {
 	
 	public List<Pedido> findAll() {
 		return repo.findAll();
+	}
+	
+	public Page<Pedido> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if(user == null) {
+			throw new AuthorizationException("Acesso negado.");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Optional<Cliente> cli = clienteRepository.findById(user.getId()); 
+		return repo.findByCliente(cli, pageRequest);
 	}
 	
 }
