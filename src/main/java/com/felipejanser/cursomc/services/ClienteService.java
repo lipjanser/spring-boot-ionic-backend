@@ -17,9 +17,12 @@ import com.felipejanser.cursomc.domain.Cliente;
 import com.felipejanser.cursomc.domain.Endereco;
 import com.felipejanser.cursomc.dto.ClienteDTO;
 import com.felipejanser.cursomc.dto.ClienteNewDTO;
+import com.felipejanser.cursomc.enums.Perfil;
 import com.felipejanser.cursomc.enums.TipoCliente;
 import com.felipejanser.cursomc.repositories.ClienteRepository;
 import com.felipejanser.cursomc.repositories.EnderecoRepository;
+import com.felipejanser.cursomc.security.UserSS;
+import com.felipejanser.cursomc.services.exceptions.AuthorizationException;
 import com.felipejanser.cursomc.services.exceptions.DataIntegrityException;
 import com.felipejanser.cursomc.services.exceptions.ObjectNotFoundException;
 
@@ -34,6 +37,12 @@ public class ClienteService {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user == null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado.");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
