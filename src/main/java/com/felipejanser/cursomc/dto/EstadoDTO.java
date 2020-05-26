@@ -2,19 +2,23 @@ package com.felipejanser.cursomc.dto;
 
 import java.io.Serializable;
 
-import com.felipejanser.cursomc.domain.Categoria;
+import javax.validation.constraints.NotEmpty;
 
-public class PedidoDTO implements Serializable {
+import org.hibernate.validator.constraints.Length;
+
+import com.felipejanser.cursomc.domain.Estado;
+
+public class EstadoDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	private String nome;
 	
-	public PedidoDTO() {
+	public EstadoDTO() {
 
 	}
 	
-	public PedidoDTO(Categoria obj) {
+	public EstadoDTO(Estado obj) {
 		this.id = obj.getId();
 		this.nome = obj.getNome();
 	}
@@ -27,6 +31,8 @@ public class PedidoDTO implements Serializable {
 		this.id = id;
 	}
 
+	@NotEmpty(message="Preenchimento do campo 'Nome' é obrigatório.")
+	@Length(min=5,max=80, message="Campo 'Nome' deve ter entre 5 e 80 caracteres.")
 	public String getNome() {
 		return nome;
 	}
