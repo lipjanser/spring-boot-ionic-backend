@@ -3,14 +3,13 @@ package com.felipejanser.cursomc.resources.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationError extends StandartError{
+public class ValidationError extends StandartError {
 	private static final long serialVersionUID = 1L;
 	
 	private List<FieldMessage> errors = new ArrayList<>();
 
-	public ValidationError(Integer status, String msg, Long timeStamp) {
-		super(status, msg, timeStamp);
-		// TODO Auto-generated constructor stub
+	public ValidationError(Long timeStamp, Integer status, String error, String message, String path) {
+		super(timeStamp, status, error, message, path);
 	}
 
 	public List<FieldMessage> getErrors() {
